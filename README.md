@@ -10,6 +10,10 @@
 ## Usage 
 These screenshots show the application being used:
 
+![screenshot 1](https://user-images.githubusercontent.com/83360651/131268616-2bcb72af-23c5-4138-978d-351b7b9c45e0.JPG)
+
+![screenshot 2](https://user-images.githubusercontent.com/83360651/131268619-8dc1fa9a-e49b-4fc9-9c36-77ee74501db5.JPG)
+
 
 ## User Story
 
