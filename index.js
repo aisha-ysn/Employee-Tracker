@@ -12,8 +12,16 @@ const db = new Database({
     database: "cms"
 });
 
-const connection = mysql.createConnection(connectionProperties);
-
+console.log(
+    ` _______  __   __  _______  ___      _______  __   __  _______  _______    _______  ______    _______  _______  ___   _  _______  ______   
+|       ||  |_|  ||       ||   |    |       ||  | |  ||       ||       |  |       ||    _ |  |   _   ||       ||   | | ||       ||    _ |  
+|    ___||       ||    _  ||   |    |   _   ||  |_|  ||    ___||    ___|  |_     _||   | ||  |  |_|  ||       ||   |_| ||    ___||   | ||  
+|   |___ |       ||   |_| ||   |    |  | |  ||       ||   |___ |   |___     |   |  |   |_||_ |       ||       ||      _||   |___ |   |_||_ 
+|    ___||       ||    ___||   |___ |  |_|  ||_     _||    ___||    ___|    |   |  |    __  ||       ||      _||     |_ |    ___||    __  |
+|   |___ | ||_|| ||   |    |       ||       |  |   |  |   |___ |   |___     |   |  |   |  | ||   _   ||     |_ |    _  ||   |___ |   |  | |
+|_______||_|   |_||___|    |_______||_______|  |___|  |_______||_______|    |___|  |___|  |_||__| |__||_______||___| |_||_______||___|  |_|
+` + "\n"
+);
 
 // Connect to database
 connection.connect((err) => {
@@ -108,11 +116,10 @@ function mainPrompt() {
             }
             // Exit 
         case "Exit":
-            {
-                exitLoop = true;
-                process.exit(0);
-                return;
-            }
+
+            exit();
+            break;
+
     }
 }
 
@@ -232,7 +239,7 @@ function getFirstAndLastName(fullName) {
     return [first_name.trim(), last_name];
 }
 
-async function updateEmployeeRole(employeeInfo) {
+function updateEmployeeRole() {
 
     const roleId = await getRoleId(employeeInfo.role);
     const employee = getFirstAndLastName(employeeInfo.employeeName);
@@ -243,7 +250,7 @@ async function updateEmployeeRole(employeeInfo) {
     console.log(`Updated employee ${employee[0]} ${employee[1]} with role ${employeeInfo.role}`);
 }
 
-async function addEmployee(employeeInfo) {
+function addEmployee() {
     let roleId = await getRoleId(employeeInfo.role);
     let managerId = await getEmployeeId(employeeInfo.manager);
 
@@ -253,15 +260,15 @@ async function addEmployee(employeeInfo) {
     console.log(`Added employee ${employeeInfo.first_name} ${employeeInfo.last_name}.`);
 }
 
-async function removeEmployee(employeeInfo) {
-    const employeeName = getFirstAndLastName(employeeInfo.employeeName);
+function removeEmployee() {
+
     let query = "DELETE from employee WHERE first_name=? AND last_name=?";
     let args = [employeeName[0], employeeName[1]];
     const rows = await db.query(query, args);
     console.log(`Employee removed: ${employeeName[0]} ${employeeName[1]}`);
 }
 
-async function addDepartment(departmentInfo) {
+function addDepartment() {
     const departmentName = departmentInfo.departmentName;
     let query = 'INSERT into department (name) VALUES (?)';
     let args = [departmentName];
@@ -269,7 +276,7 @@ async function addDepartment(departmentInfo) {
     console.log(`Added department named ${departmentName}`);
 }
 
-async function addRole(roleInfo) {
+function addRole() {
     const departmentId = await getDepartmentId(roleInfo.departmentName);
     const salary = roleInfo.salary;
     const title = roleInfo.roleName;
